@@ -12,6 +12,10 @@ class CSharpObject:
 	def MemberwiseClone(self) -> Self: ...
 	def ToString(self) -> str: ...
 
+class Delegate[RT, *AT]:
+	def __init__(self, method: Callable[[*AT], RT]): ...
+	def __iadd__(self, method: Callable[[*AT], RT]) -> Self: ...
+
 class MemberInfo(ABC, CSharpObject):
 	pass
 
@@ -29,8 +33,8 @@ class __EventArgs_static(type):
 class EventArgs(CSharpObject, metaclass = __EventArgs_static):
 	pass
 
-class EventHandler[T, A]:
-	def __iadd__(self, handler: Callable[[T, A], None]) -> Self: ...
+class EventHandler[T, A](Delegate[None, T, A]):
+	pass
 
 class MarshalByRefObject(CSharpObject):
 	pass
@@ -43,3 +47,4 @@ class ValueType(CSharpObject):
 class IntPtr(ValueType):
 	def __init__(self, value: int): ...
 	def ToInt32(self) -> int: ...
+
