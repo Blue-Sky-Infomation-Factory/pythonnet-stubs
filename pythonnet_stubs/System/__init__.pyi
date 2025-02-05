@@ -1,6 +1,5 @@
 from abc import ABC
-from functools import singledispatchmethod
-from typing import Callable, Final, Self
+from typing import Callable, Final, Self, overload
 
 class CSharpObject:
 	@staticmethod
@@ -20,10 +19,10 @@ class Type(ABC, MemberInfo):
 	pass
 
 class Uri(CSharpObject):
-	@singledispatchmethod
+	@overload
 	def __init__(self, uri: str): ...
-	@__init__.register
-	def _(self, uri: str, escape: bool): ...
+	@overload
+	def __init__(self, uri: str, escape: bool): ...
 
 class __EventArgs_static(type):
 	Empty: Final[EventArgs]
@@ -40,3 +39,7 @@ class ValueType(CSharpObject):
 	def Equals(self, object: object) -> bool: ...
 	def GetHashCode(self) -> int: ...
 	def ToString(self) -> str: ...
+
+class IntPtr(ValueType):
+	def __init__(self, value: int): ...
+	def ToInt32(self) -> int: ...
