@@ -1,5 +1,9 @@
-from abc import ABC
-from typing import Callable, Final, Self, overload
+"""
+https://learn.microsoft.com/en-us/dotnet/api/system
+"""
+
+from abc import ABC, abstractmethod
+from typing import Callable, Final, Self, Unpack, overload
 
 class CSharpObject:
 	@staticmethod
@@ -16,13 +20,19 @@ class Delegate[RT, *AT]:
 	def __init__(self, method: Callable[[*AT], RT]): ...
 	def __iadd__(self, method: Callable[[*AT], RT]) -> Self: ...
 
-class MemberInfo(ABC, CSharpObject):
+class Action[*AT](Delegate[None, Unpack[AT]]):
 	pass
 
-class Type(ABC, MemberInfo):
+class MemberInfo(ABC, CSharpObject):
+	# incomplete
+	pass
+
+class Type(ABC, MemberInfo): # type: ignore
+	# incomplete
 	pass
 
 class Uri(CSharpObject):
+	# incomplete
 	@overload
 	def __init__(self, uri: str): ...
 	@overload
@@ -37,6 +47,7 @@ class EventHandler[T, A](Delegate[None, T, A]):
 	pass
 
 class MarshalByRefObject(CSharpObject):
+	# incomplete
 	pass
 
 class ValueType(CSharpObject):
@@ -45,6 +56,17 @@ class ValueType(CSharpObject):
 	def ToString(self) -> str: ...
 
 class IntPtr(ValueType):
+	# incomplete
 	def __init__(self, value: int): ...
 	def ToInt32(self) -> int: ...
 
+class Exception(CSharpObject):
+	# incomplete
+	pass
+
+class AggregateException(Exception):
+	pass
+
+class ICloneable(ABC):
+	@abstractmethod
+	def Clone(self) -> Self: ...

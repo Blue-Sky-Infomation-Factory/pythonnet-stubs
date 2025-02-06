@@ -10,6 +10,7 @@ from System.Runtime.ConstrainedExecution import CriticalFinalizerObject
 from System.Security.Principal import IPrincipal
 
 class ExecutionContext(CSharpObject):
+	# incomplete
 	pass
 
 class ApartmentState(Enum):
@@ -49,25 +50,25 @@ class __Thread_static(type):
 	CurrentPrincipal: IPrincipal
 	CurrentThread: Final[Thread]
 class Thread(CriticalFinalizerObject, meteclass = __Thread_static):
+	# incomplete
+	@overload
+	def __init__(self, start: ThreadStart):
+		self.CurrentCulture: CultureInfo
+		self.CurrentUICulture: CultureInfo
+		self.ExecutionContext: Final[Optional[ExecutionContext]]
+		self.IsAlive: Final[bool]
+		self.IsBackground: bool
+		self.IsThreadPoolThread: Final[bool]
+		self.ManagedThreadId: Final[int]
+		self.Name: Optional[str]
+		self.Priority: ThreadPriority
+		self.ThreadState: Final[ThreadState]
+	@overload
+	def __init__(self, start: ThreadStart, max_stack_size: int): ...
 	@overload
 	def __init__(self, start: ParameterizedThreadStart): ...
 	@overload
 	def __init__(self, start: ParameterizedThreadStart, max_stack_size: int): ...
-	@overload
-	def __init__(self, start: ThreadStart): ...
-	@overload
-	def __init__(self, start: ThreadStart, max_stack_size: int): ...
-
-	CurrentCulture: CultureInfo
-	CurrentUICulture: CultureInfo
-	ExecutionContext: Final[Optional[ExecutionContext]]
-	IsAlive: Final[bool]
-	IsBackground: bool
-	IsThreadPoolThread: Final[bool]
-	ManagedThreadId: Final[int]
-	Name: Optional[str]
-	Priority: ThreadPriority
-	ThreadState: Final[ThreadState]
 
 	def GetApartmentState(self) -> ApartmentState: ...
 	def SetApartmentState(self, state: ApartmentState) -> None: ...

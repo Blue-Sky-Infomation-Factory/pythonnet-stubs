@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Final, NoReturn, Self, Union, Literal
+from typing import Final, NoReturn, Union, Literal, overload
 from System import ValueType
 
 class KnownColor(Enum):
@@ -324,16 +324,17 @@ class __Color_static(type):
 	Yellow: Final[Color]  #FFFFFF00
 	YellowGreen: Final[Color]  #FF9ACD32
 class Color(ValueType, metaclass = __Color_static):
-	def __init__(self) -> NoReturn: ...
-	A: Final[int]
-	R: Final[int]
-	G: Final[int]
-	B: Final[int]
-	IsEmpty: Final[bool]
-	IsKnownColor: Final[bool]
-	IsNamedColor: Final[bool]
-	IsSystemColor: Final[bool]
-	Name: Final[str]
+	def __init__(self) -> NoReturn:
+		"""⚠ Protected"""
+		self.A: Final[int]
+		self.R: Final[int]
+		self.G: Final[int]
+		self.B: Final[int]
+		self.IsEmpty: Final[bool]
+		self.IsKnownColor: Final[bool]
+		self.IsNamedColor: Final[bool]
+		self.IsSystemColor: Final[bool]
+		self.Name: Final[str]
 	def Equals(self, object: object) -> bool: ...
 	def GetHashCode(self) -> int: ...
 	def ToString(self) -> str: ...
@@ -348,3 +349,29 @@ class Color(ValueType, metaclass = __Color_static):
 	def FromKnownColor(known_color: KnownColor) -> Color: ...
 	@staticmethod
 	def FromName(name: str) -> Color: ...
+
+class Point(ValueType):
+	# incomplete
+	pass
+
+class __Size_static(type):
+	Empty: Final[Size]
+class Size(ValueType, metaclass = __Size_static):
+	@overload
+	def __init__(self, width: int, height: int):
+		self.Height: int
+		self.Width: int
+	@overload
+	def __init__(self, point: Point): ...
+
+	@property
+	def IsEmpty(self) -> bool: ...
+
+	@staticmethod
+	def Add(s1: Size, s2: Size) -> Size: ...
+	@staticmethod
+	def Subtract(s1: Size, s2: Size) -> Size: ...
+	
+	def Equals(self, obj: Size) -> bool: ...
+	def GetHashCode(self) -> int: ...
+	def ToString(self) -> str: ...
