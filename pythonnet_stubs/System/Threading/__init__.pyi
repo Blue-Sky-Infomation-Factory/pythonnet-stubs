@@ -49,7 +49,7 @@ class ParameterizedThreadStart(Delegate[None, Any]):
 class __Thread_static(type):
 	CurrentPrincipal: IPrincipal
 	CurrentThread: Final[Thread]
-class Thread(CriticalFinalizerObject, meteclass = __Thread_static):
+class Thread(CriticalFinalizerObject, metaclass = __Thread_static):
 	# incomplete
 	@overload
 	def __init__(self, start: ThreadStart):

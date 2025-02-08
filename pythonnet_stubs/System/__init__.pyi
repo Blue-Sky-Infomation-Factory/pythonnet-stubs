@@ -20,8 +20,7 @@ class Delegate[RT, *AT]:
 	def __init__(self, method: Callable[[*AT], RT]): ...
 	def __iadd__(self, method: Callable[[*AT], RT]) -> Self: ...
 
-class Action[*AT](Delegate[None, Unpack[AT]]):
-	pass
+class Action[*AT](Delegate[None, *AT]): ...
 
 class MemberInfo(ABC, CSharpObject):
 	# incomplete
@@ -40,11 +39,9 @@ class Uri(CSharpObject):
 
 class __EventArgs_static(type):
 	Empty: Final[EventArgs]
-class EventArgs(CSharpObject, metaclass = __EventArgs_static):
-	pass
+class EventArgs(CSharpObject, metaclass = __EventArgs_static): ...
 
-class EventHandler[T, A: EventArgs](Delegate[None, T, A]):
-	pass
+class EventHandler[T, A: EventArgs](Delegate[None, T, A]): ...
 
 class MarshalByRefObject(CSharpObject):
 	# incomplete
@@ -64,8 +61,7 @@ class Exception(CSharpObject):
 	# incomplete
 	pass
 
-class AggregateException(Exception):
-	pass
+class AggregateException(Exception): ...
 
 class ICloneable(ABC):
 	@abstractmethod
