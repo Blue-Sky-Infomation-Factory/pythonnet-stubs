@@ -43,7 +43,7 @@ class __EventArgs_static(type):
 class EventArgs(CSharpObject, metaclass = __EventArgs_static):
 	pass
 
-class EventHandler[T, A](Delegate[None, T, A]):
+class EventHandler[T, A: EventArgs](Delegate[None, T, A]):
 	pass
 
 class MarshalByRefObject(CSharpObject):
