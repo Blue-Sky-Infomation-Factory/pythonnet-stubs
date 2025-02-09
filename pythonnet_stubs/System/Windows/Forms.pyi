@@ -12,7 +12,7 @@ from System.Collections import ICollection, IEnumerable, IList
 
 class DockStyle(Enum):
 	"""
-	⚠ Special Key:<br>
+	⚠ Special key:<br>
 	None = 0<br>
 	getattr(DockStyle, "None")
 	"""
@@ -31,7 +31,7 @@ class DockStyle(Enum):
 
 class CloseReason(Enum):
 	"""
-	⚠ Special Key:<br>
+	⚠ Special key:<br>
 	None = 0<br>
 	getattr(CloseReason, "None")
 	"""

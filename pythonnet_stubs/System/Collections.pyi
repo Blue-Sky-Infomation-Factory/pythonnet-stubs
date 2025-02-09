@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Any, List
 
+from System import ValueType
+
 
 class IList(ABC):
 	@abstractmethod
@@ -57,3 +59,51 @@ class IEnumerator(ABC):
 class IEnumerable(ABC):
 	@abstractmethod
 	def GetEnumerator(self) -> IEnumerator: ...
+
+class IDictionary(ABC, ICollection, IEnumerable):
+	@property
+	@abstractmethod
+	def IsFixedSize(self) -> bool: ...
+	@property
+	@abstractmethod
+	def IsReadOnly(self) -> bool: ...
+	@property
+	@abstractmethod
+	def Keys(self) -> ICollection: ...
+	@property
+	@abstractmethod
+	def Values(self) -> ICollection: ...
+
+	@abstractmethod
+	def Add(self, key: object, value: Any) -> None: ...
+	@abstractmethod
+	def Clear(self) -> None: ...
+	@abstractmethod
+	def Contains(self, key: object) -> bool: ...
+	@abstractmethod
+	def GetEnumerator(self) -> IDictionaryEnumerator: ...
+	@abstractmethod
+	def Remove(self, key: object) -> bool: ...
+
+	@abstractmethod
+	def __getitem__(self, key: object) -> object: ...
+	@abstractmethod
+	def __setitem__(self, key: object, value: Any) -> None: ...
+
+class DictionaryEntry(ValueType):
+	# incomplete
+	def __init__(self):
+		self.Key: object
+		self.Value: Any
+	# def Deconstruct()
+
+class IDictionaryEnumerator(IEnumerator):
+	@property
+	@abstractmethod
+	def Entry(self) -> DictionaryEntry: ...
+	@property
+	@abstractmethod
+	def Key(self) -> object: ...
+	@property
+	@abstractmethod
+	def Value(self) -> Any: ...

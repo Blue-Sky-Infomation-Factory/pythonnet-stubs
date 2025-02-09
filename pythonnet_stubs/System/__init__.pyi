@@ -3,7 +3,11 @@ https://learn.microsoft.com/en-us/dotnet/api/system
 """
 
 from abc import ABC, abstractmethod
-from typing import Callable, Final, Self, Unpack, overload
+from typing import Callable, Final, Optional, Self, overload
+
+from System.Runtime.Serialization import ISerializable, SafeSerializationEventArgs, SerializationInfo, StreamingContext
+from System.Collections import IDictionary
+from System.Reflection import MethodBase
 
 class CSharpObject:
 	@staticmethod
@@ -57,9 +61,29 @@ class IntPtr(ValueType):
 	def __init__(self, value: int): ...
 	def ToInt32(self) -> int: ...
 
-class Exception(CSharpObject):
-	# incomplete
-	pass
+class Exception(CSharpObject, ISerializable):
+	@overload
+	def __init__(self):
+		self.Data: Final[IDictionary]
+		self.HelpLink: str
+		self.HResult: int
+		self.InnerException: Optional[Exception]
+		self.Message: Final[str]
+		self.Source: str
+		self.StackTrace: Final[str]
+		self.TargetSite: Final[Optional[MethodBase]]
+		self.SerializeObjectState: EventHandler[object, SafeSerializationEventArgs]
+	@overload
+	def __init__(self, message: str): ...
+	@overload
+	def __init__(self, info: SerializationInfo, context: StreamingContext): ...
+	@overload
+	def __init__(self, message: str, inner_exception: Exception): ...
+
+	def GetBaseException(self) -> Exception: ...
+	def GetObjectData(self, info: SerializationInfo, context: StreamingContext) -> None: ...
+	def GetType(self) -> Type: ...
+	def ToString(self) -> str: ...
 
 class AggregateException(Exception): ...
 

@@ -4,7 +4,7 @@ https://learn.microsoft.com/en-us/dotnet/api/system.threading
 
 from enum import Enum
 from typing import Any, Final, Optional, overload
-from System import CSharpObject, Delegate, TimeSpan
+from System import CSharpObject, Delegate, MarshalByRefObject, TimeSpan, ValueType
 from System.Globalization import CultureInfo
 from System.Runtime.ConstrainedExecution import CriticalFinalizerObject
 from System.Security.Principal import IPrincipal
@@ -40,11 +40,27 @@ class ThreadState(Enum):
 	AbortRequested = 128
 	Aborted = 256
 
-class ThreadStart(Delegate[None]):
+class WaitHandle(MarshalByRefObject):
+	# incomplete
 	pass
 
-class ParameterizedThreadStart(Delegate[None, Any]):
+class __CancellationToken_static(type):
+	# None: Final[CancellationToken]
 	pass
+class CancellationToken(ValueType, metaclass=__CancellationToken_static):
+	"""
+	⚠ Special static key:<br>
+	None -> getattr(CancellationToken, "None")
+	"""
+	# incomplete
+	def __init__(self, canceled: bool):
+		self.CanBeCanceled: Final[bool]
+		self.IsCancellationRequested: Final[bool]
+		self.WaitHandle: Final[WaitHandle]
+
+class ThreadStart(Delegate[None]): ...
+
+class ParameterizedThreadStart(Delegate[None, Any]): ...
 
 class __Thread_static(type):
 	CurrentPrincipal: IPrincipal
