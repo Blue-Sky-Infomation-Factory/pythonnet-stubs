@@ -3,10 +3,10 @@ https://learn.microsoft.com/en-us/dotnet/api/system.runtime.serialization
 """
 
 from abc import ABC, abstractmethod
-from System import CSharpObject, EventArgs, ValueType
+from System import Object, EventArgs, ValueType
 
 
-class SerializationInfo(CSharpObject):
+class SerializationInfo(Object):
 	# incomplete
 	pass
 

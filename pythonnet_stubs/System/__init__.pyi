@@ -3,13 +3,13 @@ https://learn.microsoft.com/en-us/dotnet/api/system
 """
 
 from abc import ABC, abstractmethod
-from typing import Callable, Final, Optional, Self, overload
+from typing import Callable, Final, List, Optional, Self, Union, overload
 
 from System.Runtime.Serialization import ISerializable, SafeSerializationEventArgs, SerializationInfo, StreamingContext
 from System.Collections import ICollection, IDictionary, IEnumerable, IList, IStructuralComparable, IStructuralEquatable
 from System.Reflection import MethodBase
 
-class CSharpObject:
+class Object:
 	@staticmethod
 	def Equals(object1: object, object2: object) -> bool: ... # type: ignore
 	@staticmethod
@@ -23,10 +23,12 @@ class CSharpObject:
 class Delegate[RT, *AT]:
 	def __init__(self, method: Callable[[*AT], RT]): ...
 	def __iadd__(self, method: Callable[[*AT], RT]) -> Self: ...
+	def __isub__(self, method: Callable[[*AT], RT]) -> Self: ...
 
 class Action[*AT](Delegate[None, *AT]): ...
+class Func[*AT, RT](Delegate[RT, *AT]): ...
 
-class MemberInfo(ABC, CSharpObject):
+class MemberInfo(ABC, Object):
 	# incomplete
 	pass
 
@@ -34,7 +36,7 @@ class Type(ABC, MemberInfo): # type: ignore
 	# incomplete
 	pass
 
-class Uri(CSharpObject):
+class Uri(Object):
 	# incomplete
 	@overload
 	def __init__(self, uri: str): ...
@@ -43,15 +45,15 @@ class Uri(CSharpObject):
 
 class __EventArgs_static(type):
 	Empty: Final[EventArgs]
-class EventArgs(CSharpObject, metaclass = __EventArgs_static): ...
+class EventArgs(Object, metaclass = __EventArgs_static): ...
 
 class EventHandler[T, A: EventArgs](Delegate[None, T, A]): ...
 
-class MarshalByRefObject(CSharpObject):
+class MarshalByRefObject(Object):
 	# incomplete
 	pass
 
-class ValueType(CSharpObject):
+class ValueType(Object):
 	def Equals(self, object: object) -> bool: ...
 	def GetHashCode(self) -> int: ...
 	def ToString(self) -> str: ...
@@ -61,7 +63,7 @@ class IntPtr(ValueType):
 	def __init__(self, value: int): ...
 	def ToInt32(self) -> int: ...
 
-class Exception(CSharpObject, ISerializable):
+class Exception(Object, ISerializable):
 	@overload
 	def __init__(self):
 		self.Data: Final[IDictionary]
@@ -91,6 +93,8 @@ class ICloneable(ABC):
 	@abstractmethod
 	def Clone(self) -> Self: ...
 
-class Array[T](CSharpObject, ICollection, IEnumerable, IList, IStructuralComparable, IStructuralEquatable, ICloneable):
+class Array[T](Object, ICollection, IEnumerable, IList, IStructuralComparable, IStructuralEquatable, ICloneable):
 	# incomplete
 	pass
+
+type _inbound_array[T] = Union[Array[T], List[T]]

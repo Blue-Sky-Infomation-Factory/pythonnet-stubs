@@ -4,12 +4,12 @@ https://learn.microsoft.com/en-us/dotnet/api/system.threading
 
 from enum import Enum
 from typing import Any, Final, Optional, overload
-from System import CSharpObject, Delegate, MarshalByRefObject, TimeSpan, ValueType
+from System import Object, Delegate, MarshalByRefObject, TimeSpan, ValueType
 from System.Globalization import CultureInfo
 from System.Runtime.ConstrainedExecution import CriticalFinalizerObject
 from System.Security.Principal import IPrincipal
 
-class ExecutionContext(CSharpObject):
+class ExecutionContext(Object):
 	# incomplete
 	pass
 

@@ -5,7 +5,7 @@ https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms
 from abc import ABC
 from enum import Enum
 from typing import Final, List, Optional, Self, Union, overload
-from System import CSharpObject, EventArgs, EventHandler, ICloneable, IntPtr
+from System import Object, EventArgs, EventHandler, ICloneable, IntPtr
 from System.ComponentModel import CancelEventArgs, Component
 from System.Drawing import Size, Color
 from System.Collections import ICollection, IEnumerable, IList
@@ -57,7 +57,7 @@ class FormClosedEventArgs(EventArgs):
 
 class FormClosedEventHandler(EventHandler[Form, FormClosedEventArgs]): ...
 
-class ArrangedElementCollection(CSharpObject, ICollection, IEnumerable, IList): ...
+class ArrangedElementCollection(Object, ICollection, IEnumerable, IList): ...
 
 class Control(Component):
 	# incomplete
@@ -122,14 +122,14 @@ class Form(ContainerControl):
 		self.Closed: FormClosedEventHandler
 	def Show(self, owner: Optional[IWin32Window] = None) -> None: ...
 
-class ApplicationContext(CSharpObject):
+class ApplicationContext(Object):
 	# incomplete
 	@overload
 	def __init__(self): ...
 	@overload
 	def __init__(self, main_form: Form): ...
 
-class Application(CSharpObject):
+class Application(Object):
 	# incomplete
 	@overload
 	@staticmethod

@@ -1,6 +1,6 @@
-from System import CSharpObject
+from System import Object
 
 
-class CriticalFinalizerObject(CSharpObject):
+class CriticalFinalizerObject(Object):
 	# incomplete
 	pass
