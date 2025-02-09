@@ -97,7 +97,7 @@ class DictionaryEntry(ValueType):
 		self.Value: Any
 	# def Deconstruct()
 
-class IDictionaryEnumerator(IEnumerator):
+class IDictionaryEnumerator(ABC, IEnumerator):
 	@property
 	@abstractmethod
 	def Entry(self) -> DictionaryEntry: ...
@@ -107,3 +107,11 @@ class IDictionaryEnumerator(IEnumerator):
 	@property
 	@abstractmethod
 	def Value(self) -> Any: ...
+
+class IStructuralComparable(ABC):
+	# incomplete
+	pass
+
+class IStructuralEquatable(ABC):
+	# incomplete
+	pass

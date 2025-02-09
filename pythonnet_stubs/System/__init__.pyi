@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 from typing import Callable, Final, Optional, Self, overload
 
 from System.Runtime.Serialization import ISerializable, SafeSerializationEventArgs, SerializationInfo, StreamingContext
-from System.Collections import IDictionary
+from System.Collections import ICollection, IDictionary, IEnumerable, IList, IStructuralComparable, IStructuralEquatable
 from System.Reflection import MethodBase
 
 class CSharpObject:
@@ -90,3 +90,7 @@ class AggregateException(Exception): ...
 class ICloneable(ABC):
 	@abstractmethod
 	def Clone(self) -> Self: ...
+
+class Array[T](CSharpObject, ICollection, IEnumerable, IList, IStructuralComparable, IStructuralEquatable, ICloneable):
+	# incomplete
+	pass
