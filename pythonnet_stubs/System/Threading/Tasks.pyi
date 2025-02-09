@@ -1,7 +1,11 @@
+"""
+https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks
+"""
+
 from abc import ABC, ABCMeta, abstractmethod
 from enum import Enum
-from typing import Final, overload
-from System import AggregateException, CSharpObject, EventArgs, EventHandler, Exception
+from typing import Final, Union, overload
+from System import Action, AggregateException, Object, EventArgs, EventHandler, Exception, Func
 from System.Threading import CancellationToken
 
 class TaskCreationOptions(Enum):
@@ -20,7 +24,66 @@ class TaskCreationOptions(Enum):
 
 class Task[RT]:
 	# incomplete
-	pass
+	@overload
+	def __init__(self, method: Union[Action, Func[RT]]):
+		pass
+	@overload
+	def __init__(self, method: Union[Action, Func[RT]], cancellation_token: CancellationToken): ...
+	@overload
+	def __init__(self, method: Union[Action, Func[RT]], creation_options: TaskCreationOptions): ...
+	@overload
+	def __init__[AT](self, method: Union[Action[AT], Func[AT, RT]], arg: AT): ...
+	@overload
+	def __init__(self, method: Union[Action, Func[RT]], cancellation_token: CancellationToken, creation_options: TaskCreationOptions): ...
+	@overload
+	def __init__[AT](self, method: Union[Action[AT], Func[AT, RT]], arg: AT, cancellation_token: CancellationToken): ...
+	@overload
+	def __init__[AT](self, method: Union[Action[AT], Func[AT, RT]], arg: AT, creation_options: TaskCreationOptions): ...
+	@overload
+	def __init__[AT](self, method: Union[Action[AT], Func[AT, RT]], arg: AT, cancellation_token: CancellationToken, creation_options: TaskCreationOptions): ...
+
+	@overload
+	def Start(self) -> None: ...
+	@overload
+	def Start(self, scheduler: TaskScheduler) -> None: ...
+
+	@classmethod
+	def Factory(cls) -> TaskFactory: ...
+
+class TaskFactory(Object):
+	# incomplete
+	@overload
+	def StartNew[AT](self, action: Action[AT], arg: AT, cancellation_token: CancellationToken, creation_options: TaskCreationOptions, scheduler: TaskScheduler) -> Task[None]: ...
+	@overload
+	def StartNew(self, action: Action, cancellation_token: CancellationToken, creation_options: TaskCreationOptions, scheduler: TaskScheduler) -> Task[None]: ...
+	@overload
+	def StartNew[AT](self, action: Action[AT], arg: AT, cancellation_token: CancellationToken) -> Task[None]: ...
+	@overload
+	def StartNew[AT](self, action: Action[AT], arg: AT, creation_options: TaskCreationOptions) -> Task[None]: ...
+	@overload
+	def StartNew(self, action: Action, cancellation_token: CancellationToken) -> Task[None]: ...
+	@overload
+	def StartNew(self, action: Action, creation_options: TaskCreationOptions) -> Task[None]: ...
+	@overload
+	def StartNew(self, action: Action) -> Task[None]: ...
+	@overload
+	def StartNew[AT](self, action: Action[AT], arg: AT) -> Task[None]: ...
+	@overload
+	def StartNew[RT](self, function: Func[RT], cancellation_token: CancellationToken, creation_options: TaskCreationOptions, scheduler: TaskScheduler) -> Task[RT]: ...
+	@overload
+	def StartNew[RT](self, function: Func[RT]) -> Task[RT]: ...
+	@overload
+	def StartNew[AT, RT](self, function: Func[AT, RT], arg: AT) -> Task[RT]: ...
+	@overload
+	def StartNew[RT](self, function: Func[RT], cancellation_token: CancellationToken) -> Task[RT]: ...
+	@overload
+	def StartNew[RT](self, function: Func[RT], creation_options: TaskCreationOptions) -> Task[RT]: ...
+	@overload
+	def StartNew[AT, RT](self, function: Func[AT, RT], arg: AT, cancellation_token: CancellationToken) -> Task[RT]: ...
+	@overload
+	def StartNew[AT, RT](self, function: Func[AT, RT], arg: AT, creation_options: TaskCreationOptions) -> Task[RT]: ...
+	@overload
+	def StartNew[AT, RT](self, function: Func[AT, RT], arg: AT, cancellation_token: CancellationToken, creation_options: TaskCreationOptions, scheduler: TaskScheduler) -> Task[RT]: ...
 
 class UnobservedTaskExceptionEventArgs(EventArgs):
 	# incomplete
@@ -31,14 +94,14 @@ class __TaskScheduler_static(ABCMeta):
 	Current: Final[TaskScheduler]
 	Default: Final[TaskScheduler]
 	UnobservedTaskException: EventHandler[object, UnobservedTaskExceptionEventArgs]
-class TaskScheduler(ABC, CSharpObject, metaclass=__TaskScheduler_static):
+class TaskScheduler(ABC, Object, metaclass=__TaskScheduler_static):
 	def __init__(self):
 		self.Id: Final[int]
 	@property
 	@abstractmethod
 	def MaximumConcurrencyLevel(self) -> int: ...
 
-class TaskCompletionSource[RT](CSharpObject):
+class TaskCompletionSource[RT](Object):
 	@overload
 	def __init__(self):
 		self.Task: Final[Task]
