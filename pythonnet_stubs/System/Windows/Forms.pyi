@@ -9,6 +9,7 @@ from System import Object, EventArgs, EventHandler, ICloneable, IntPtr
 from System.ComponentModel import CancelEventArgs, Component
 from System.Drawing import Size, Color
 from System.Collections import ICollection, IEnumerable, IList
+from System.Threading import SynchronizationContext
 
 class DockStyle(Enum):
 	"""
@@ -125,7 +126,8 @@ class Form(ContainerControl):
 class ApplicationContext(Object):
 	# incomplete
 	@overload
-	def __init__(self): ...
+	def __init__(self):
+		self.MainForm: Form
 	@overload
 	def __init__(self, main_form: Form): ...
 
@@ -146,3 +148,11 @@ class Application(Object):
 	@overload
 	@staticmethod
 	def Exit(event: CancelEventArgs) -> None: ...
+	@staticmethod
+	def EnableVisualStyles() -> None: ...
+	@staticmethod
+	def SetCompatibleTextRenderingDefault(bool): ...
+
+class WindowsFormsSynchronizationContext(SynchronizationContext):
+	#incomplete
+	pass
