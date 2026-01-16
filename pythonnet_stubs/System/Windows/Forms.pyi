@@ -60,6 +60,26 @@ class FormClosedEventHandler(EventHandler[Form, FormClosedEventArgs]): ...
 
 class ArrangedElementCollection(Object, ICollection, IEnumerable, IList): ...
 
+class ControlStyles(Enum):
+	ContainerControl = 0b000000000000000001
+	UserPaint = 0b000000000000000010
+	Opaque = 0b000000000000000100
+	ResizeRedraw = 0b000000000000001000
+	FixedWidth = 0b000000000000010000
+	FixedHeight = 0b000000000000100000
+	StandardClick = 0b000000000001000000
+	Selectable = 0b000000000010000000
+	UserMouse = 0b000000000100000000
+	SupportsTransparentBackColor = 0b000000001000000000
+	StandardDoubleClick = 0b000000010000000000
+	AllPaintingInWmPaint = 0b000000100000000000
+	CacheText = 0b000001000000000000
+	EnableNotifyMessage = 0b000010000000000000
+	DoubleBuffer = 0b000100000000000000
+	OptimizedDoubleBuffer = 0b001000000000000000
+	UseTextForAccessibility = 0b010000000000000000
+	ApplyThemingImplicitly = 0b100000000000000000
+
 class Control(Component):
 	# incomplete
 	class ControlCollection(ArrangedElementCollection, ICloneable):
@@ -89,7 +109,9 @@ class Control(Component):
 		self.Controls: Final[Control.ControlCollection]
 		self.Dock: DockStyle
 		self.BackColor: Color
-		self.DefaultBackColor : Final[Color]
+		self.DefaultBackColor: Final[Color]
+		self.MinimumSize: Size
+		self.MaximumSize: Size
 	@overload
 	def __init__(self, text: str): ...
 	@overload
@@ -98,7 +120,7 @@ class Control(Component):
 	def __init__(self, text: str, left: int, top: int, width: int, height: int): ...
 	@overload
 	def __init__(self, parent: Self, text: str, left: int, top: int, width: int, height: int): ...
-
+	def SetStyle(self, flag: ControlStyles, value: bool) -> None: ...
 
 class ScrollableControl(Control):
 	# incomplete
@@ -115,6 +137,7 @@ class IWin32Window(ABC):
 class Form(ContainerControl):
 	# incomplete
 	def __init__(self):
+		self.ClientSize: Size
 		self.Size: Size
 		self.Text: str
 		self.BackColor: Color
