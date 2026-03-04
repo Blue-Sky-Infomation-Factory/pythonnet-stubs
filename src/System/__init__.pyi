@@ -98,3 +98,15 @@ class Array[T](Object, ICollection, IEnumerable, IList, IStructuralComparable, I
 	pass
 
 type _inbound_array[T] = Union[Array[T], List[T]]
+
+class IDisposable(ABC):
+	# incomplete
+	pass
+
+class IKeyboardInputSink(ABC):
+	# incomplete
+	pass
+
+class IWin32Window(ABC):
+	# incomplete
+	pass
