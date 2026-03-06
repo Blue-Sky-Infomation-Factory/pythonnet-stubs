@@ -73,10 +73,8 @@ class ICollection[T](IEnumerable[T], ABC):
 class KeyValuePair[KT, VT](ValueType):
 	# incomplete
 	@property
-	@abstractmethod
 	def Key(self) -> KT: ...
 	@property
-	@abstractmethod
 	def Value(self) -> VT: ...
 
 class IDictionary[KT, VT](ICollection[KeyValuePair[KT, VT]], ABC):
