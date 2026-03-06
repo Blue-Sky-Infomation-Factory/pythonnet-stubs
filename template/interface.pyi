@@ -6,6 +6,6 @@ class Interface(ABC):
 	@abstractmethod
 	def method(self, arg: Any) -> Any: ...
 
-	@abstractmethod
 	@property
+	@abstractmethod
 	def getter(self) -> Any: ...
