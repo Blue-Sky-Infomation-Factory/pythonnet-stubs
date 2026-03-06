@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import Any, List
+from typing import Any, List, overload, override
 
 from System import ValueType
 
 
 class IList(ABC):
 	@abstractmethod
-	def Add(self, value: Any) -> int: ...
+	def Add(self, value: Any, /) -> int: ...
 	@abstractmethod
 	def Clear(self) -> None: ...
 	@abstractmethod
@@ -20,11 +20,11 @@ class IList(ABC):
 	@abstractmethod
 	def RemoveAt(self, index: int) -> None: ...
 
-	@abstractmethod
 	@property
+	@abstractmethod
 	def IsFixedSize(self) -> bool: ...
-	@abstractmethod
 	@property
+	@abstractmethod
 	def IsReadOnly(self) -> bool: ...
 
 	@abstractmethod
@@ -32,35 +32,54 @@ class IList(ABC):
 	@abstractmethod
 	def __setitem__(self, index: int, value: Any) -> None: ...
 
-class ICollection(ABC):
-	@abstractmethod
-	def CopyTo(self, array: List, index: int) -> None: ...
-
-	@abstractmethod
+class IEnumerator[T](ABC):
 	@property
-	def Count(self) -> int: ...
 	@abstractmethod
-	@property
-	def IsSynchronized(self) -> bool: ...
-	@abstractmethod
-	@property
-	def SyncRoot(self) -> object: ...
-
-class IEnumerator(ABC):
-	@abstractmethod
-	@property
-	def Current(self) -> Any: ...
+	def Current(self) -> T: ...
 
 	@abstractmethod
 	def MoveNext(self) -> bool: ...
 	@abstractmethod
 	def Reset(self) -> None: ...
 
-class IEnumerable(ABC):
+class IEnumerable[T](ABC):
 	@abstractmethod
-	def GetEnumerator(self) -> IEnumerator: ...
+	def GetEnumerator(self) -> IEnumerator[T]: ...
 
-class IDictionary(ABC, ICollection, IEnumerable):
+class ICollection[T](IEnumerable[T], ABC):
+	#incomplete
+	@abstractmethod
+	def CopyTo(self, array: List[T], index: int) -> None: ...
+
+	@property
+	@abstractmethod
+	def Count(self) -> int: ...
+	@property
+	@abstractmethod
+	def IsSynchronized(self) -> bool: ...
+	@property
+	@abstractmethod
+	def SyncRoot(self) -> object: ...
+
+	@abstractmethod
+	def Add(self, item: T) -> None: ...
+	@abstractmethod
+	def clear(self) -> None: ...
+	@abstractmethod
+	def Contains(self, item: T, /) -> bool: ...
+	@abstractmethod
+	def Remove(self, item: T, /) -> bool: ...
+
+class KeyValuePair[KT, VT](ValueType):
+	# incomplete
+	@property
+	@abstractmethod
+	def Key(self) -> KT: ...
+	@property
+	@abstractmethod
+	def Value(self) -> VT: ...
+
+class IDictionary[KT, VT](ICollection[KeyValuePair[KT, VT]], ABC):
 	@property
 	@abstractmethod
 	def IsFixedSize(self) -> bool: ...
@@ -69,26 +88,26 @@ class IDictionary(ABC, ICollection, IEnumerable):
 	def IsReadOnly(self) -> bool: ...
 	@property
 	@abstractmethod
-	def Keys(self) -> ICollection: ...
+	def Keys(self) -> ICollection[KT]: ...
 	@property
 	@abstractmethod
-	def Values(self) -> ICollection: ...
+	def Values(self) -> ICollection[VT]: ...
 
 	@abstractmethod
-	def Add(self, key: object, value: Any) -> None: ...
+	def Add(self, key: KT, value: VT) -> None: ... # type: ignore
 	@abstractmethod
 	def Clear(self) -> None: ...
 	@abstractmethod
-	def Contains(self, key: object) -> bool: ...
+	def Contains(self, key: KT) -> bool: ... # type: ignore
 	@abstractmethod
 	def GetEnumerator(self) -> IDictionaryEnumerator: ...
 	@abstractmethod
-	def Remove(self, key: object) -> bool: ...
+	def Remove(self, key: KT) -> bool: ... # type: ignore
 
 	@abstractmethod
-	def __getitem__(self, key: object) -> object: ...
+	def __getitem__(self, key: KT) -> VT: ...
 	@abstractmethod
-	def __setitem__(self, key: object, value: Any) -> None: ...
+	def __setitem__(self, key: KT, value: VT) -> None: ...
 
 class DictionaryEntry(ValueType):
 	# incomplete
@@ -97,7 +116,7 @@ class DictionaryEntry(ValueType):
 		self.Value: Any
 	# def Deconstruct()
 
-class IDictionaryEnumerator(ABC, IEnumerator):
+class IDictionaryEnumerator(IEnumerator, ABC):
 	@property
 	@abstractmethod
 	def Entry(self) -> DictionaryEntry: ...

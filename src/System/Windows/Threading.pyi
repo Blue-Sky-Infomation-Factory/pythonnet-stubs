@@ -7,6 +7,5 @@ class Dispatcher(Object):
 	pass
 
 class DispatcherObject(Object):
-	def __init__(self):
-		"""protected"""
+	def __init__(self): # protected
 		self.Dispatcher: Final[Dispatcher]
