@@ -8,6 +8,7 @@ from System import Object
 from System.Collections import ICollection, IEnumerable, IList
 from System.Windows import FrameworkContentElement, FrameworkElement, UIElement
 from System.Windows.Markup import IAddChild
+from System.Windows.Media import Brush
 
 
 class Control(FrameworkElement):
@@ -27,6 +28,10 @@ class UIElementCollection(Object, ICollection[UIElement]):
 
 class Panel(FrameworkElement, IAddChild):
 	# incomplete
+	@property
+	def Background(self) -> Optional[Brush]: ...
+	@Background.setter
+	def Background(self, value: Optional[Brush]) -> None: ...
 	@property
 	def Children(self) -> UIElementCollection: ...
 
@@ -58,11 +63,27 @@ class ColumnDefinitionCollection(
 	Object,
 	ICollection[ColumnDefinition]
 ):
+    # incomplete
+	pass
+
+class RowDefinition(DefinitionBase):
+    # incomplete
+	pass
+
+class RowDefinitionCollection(
+	Object,
+	ICollection[RowDefinition]
+):
+    # incomplete
+	pass
+
+class Grid(Panel):
+    # incomplete
+	@property
+	def RowDefinitions(self) -> RowDefinitionCollection:...
+	@RowDefinitions.setter
+	def RowDefinitions(self, value: RowDefinitionCollection) -> None:...
 	@property
 	def ColumnDefinitions(self) -> ColumnDefinitionCollection:...
 	@ColumnDefinitions.setter
 	def ColumnDefinitions(self, value: ColumnDefinitionCollection) -> None:...
-
-class Grid(Panel):
-    # incomplete
-	pass

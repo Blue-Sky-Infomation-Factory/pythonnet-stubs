@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 from typing import Callable, Final, List, Optional, Self, Union, overload
 
 from System.Runtime.Serialization import ISerializable, SafeSerializationEventArgs, SerializationInfo, StreamingContext
-from System.Collections import ICollection, IDictionary, IEnumerable, IList, IStructuralComparable, IStructuralEquatable
+from System.Collections import ICollection, IDictionary, IStructuralComparable, IStructuralEquatable
 from System.Reflection import MethodBase
 
 class Object:
@@ -93,7 +93,7 @@ class ICloneable(ABC):
 	@abstractmethod
 	def Clone(self) -> Self: ...
 
-class Array[T](Object, ICollection, IEnumerable, IList, IStructuralComparable, IStructuralEquatable, ICloneable):
+class Array[T](Object, ICollection, IStructuralComparable, IStructuralEquatable, ICloneable):
 	# incomplete
 	pass
 
@@ -108,5 +108,13 @@ class IKeyboardInputSink(ABC):
 	pass
 
 class IWin32Window(ABC):
+	# incomplete
+	pass
+
+class IFormattable(ABC):
+	# incomplete
+	pass
+
+class IEquatable[T](ABC):
 	# incomplete
 	pass

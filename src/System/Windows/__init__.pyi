@@ -43,6 +43,10 @@ class DependencyObject(DispatcherObject):
 	#incomplete
 	pass
 
+class Freezable(DependencyObject, ABC):
+	#incomplete
+	pass
+
 class IInputElement(ABC):
 	#incomplete
 	pass
