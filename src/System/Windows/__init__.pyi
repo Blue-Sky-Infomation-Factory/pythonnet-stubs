@@ -4,8 +4,9 @@ https://learn.microsoft.com/en-us/dotnet/api/system.windows
 
 from abc import ABC
 from enum import Enum
-from typing import overload
+from typing import Final, Self, overload
 
+from System import EventArgs, EventHandler
 from System.ComponentModel import ISupportInitialize
 from System.Windows.Controls import ContentControl
 from System.Windows.Markup import IQueryAmbient
@@ -38,6 +39,10 @@ class Application(DispatcherObject, IQueryAmbient):
 	def Run(self) -> int:...
 	@overload
 	def Run(self, window: Window) -> int:...
+	@overload
+	def Shutdown(self) -> None: ...
+	@overload
+	def Shutdown(self, code: int) -> None: ...
 
 class DependencyObject(DispatcherObject):
 	#incomplete
@@ -103,7 +108,11 @@ class FrameworkContentElement(ContentElement, ISupportInitialize, IFrameworkInpu
 	pass
 
 class Window(ContentControl):
+	#incomplete
+	def __init__(self):
+		self.Closed: EventHandler[Self, EventArgs]
 	@property
 	def Title(self) -> str: ...
 	@Title.setter
 	def Title(self, value: str) -> None: ...
+	def Show(self) -> None: ...
