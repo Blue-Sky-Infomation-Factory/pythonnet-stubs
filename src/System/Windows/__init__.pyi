@@ -34,6 +34,14 @@ class VerticalAlignment(Enum):
 	# The child element stretches to fill the parent's layout slot.
 	Stretch = 3
 
+class ShutdownMode(Enum):
+	# An application shuts down when either the last window closes, or Shutdown() is called.
+	OnLastWindowClose = 0
+	# An application shuts down when either the main window closes, or Shutdown() is called.
+	OnMainWindowClose = 1
+	# An application shuts down only when Shutdown() is called.
+	OnExplicitShutdown = 2
+
 class Application(DispatcherObject, IQueryAmbient):
 	@overload
 	def Run(self) -> int:...
@@ -43,6 +51,10 @@ class Application(DispatcherObject, IQueryAmbient):
 	def Shutdown(self) -> None: ...
 	@overload
 	def Shutdown(self, code: int) -> None: ...
+	@property
+	def ShutdownMode(self) -> ShutdownMode: ...
+	@ShutdownMode.setter
+	def ShutdownMode(self, value: ShutdownMode) -> None: ...
 
 class DependencyObject(DispatcherObject):
 	#incomplete
@@ -116,3 +128,4 @@ class Window(ContentControl):
 	@Title.setter
 	def Title(self, value: str) -> None: ...
 	def Show(self) -> None: ...
+	def Close(self) -> None: ...
