@@ -22,7 +22,7 @@ class TaskCreationOptions(Enum):
 	HideScheduler = 16
 	RunContinuationsAsynchronously = 64
 
-class Task[RT]:
+class Task[RT](Object):
 	# incomplete
 	@overload
 	def __init__(self, method: Union[Action, Func[RT]]):

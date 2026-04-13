@@ -1,7 +1,8 @@
+from abc import ABC, abstractmethod
 from typing import Final
 
 from System import IEquatable, IFormattable, ValueType
-from System.Windows import DependencyObject
+from System.Windows import DependencyObject, Freezable
 from System.Windows.Media.Animation import Animatable
 
 
@@ -168,3 +169,19 @@ class __Brushes_static(type):
 	Yellow: Final[SolidColorBrush]  # FFFFFF00
 	YellowGreen: Final[SolidColorBrush]  # FF9ACD32
 class Brushes(ValueType, metaclass = __Brushes_static):...
+
+class ImageMetadata(Freezable, ABC):
+	#incomplete
+	pass
+
+class ImageSource(Animatable, IFormattable, ABC):
+	#incomplete
+	@property
+	@abstractmethod
+	def Height(self) -> float: ...
+	@property
+	@abstractmethod
+	def Width(self) -> float: ...
+	@property
+	@abstractmethod
+	def Metadata(self) -> ImageMetadata: ...

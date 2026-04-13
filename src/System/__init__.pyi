@@ -32,7 +32,7 @@ class MemberInfo(ABC, Object):
 	# incomplete
 	pass
 
-class Type(ABC, MemberInfo): # type: ignore
+class Type(MemberInfo, ABC):
 	# incomplete
 	pass
 

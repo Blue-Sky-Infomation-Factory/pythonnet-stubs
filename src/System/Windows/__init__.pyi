@@ -4,7 +4,7 @@ https://learn.microsoft.com/en-us/dotnet/api/system.windows
 
 from abc import ABC
 from enum import Enum
-from typing import Final, Self, overload
+from typing import Self, overload
 
 from System import EventArgs, EventHandler
 from System.ComponentModel import ISupportInitialize
