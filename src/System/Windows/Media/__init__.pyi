@@ -1,3 +1,7 @@
+"""
+https://learn.microsoft.com/en-us/dotnet/api/system.windows.media
+"""
+
 from abc import ABC, abstractmethod
 from typing import Final
 

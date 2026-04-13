@@ -1,3 +1,7 @@
+"""
+https://learn.microsoft.com/en-us/dotnet/api/system.drawing
+"""
+
 from enum import Enum
 from typing import Final, NoReturn, Union, Literal, overload
 from System import ValueType

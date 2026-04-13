@@ -1,3 +1,7 @@
+"""
+https://learn.microsoft.com/en-us/dotnet/api/system.collections
+"""
+
 from abc import ABC, abstractmethod
 from typing import Any, List
 

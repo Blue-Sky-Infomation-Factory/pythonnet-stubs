@@ -1,3 +1,7 @@
+"""
+https://learn.microsoft.com/en-us/dotnet/api/system.windows.threading
+"""
+
 from typing import Final, Tuple, Unpack
 
 from System import Delegate, Object

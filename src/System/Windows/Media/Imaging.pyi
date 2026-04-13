@@ -1,3 +1,7 @@
+"""
+https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.imaging
+"""
+
 from abc import ABC
 
 from System import Uri

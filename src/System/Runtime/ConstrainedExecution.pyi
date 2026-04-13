@@ -1,3 +1,7 @@
+"""
+https://learn.microsoft.com/en-us/dotnet/api/system.runtime.constrainedexecution
+"""
+
 from System import Object
 
 

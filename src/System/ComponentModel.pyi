@@ -1,3 +1,7 @@
+"""
+https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel
+"""
+
 from abc import ABC
 
 from System import EventArgs, MarshalByRefObject
