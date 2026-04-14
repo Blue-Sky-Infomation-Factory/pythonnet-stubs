@@ -4,13 +4,13 @@ https://learn.microsoft.com/en-us/dotnet/api/system.windows
 
 from abc import ABC
 from enum import Enum
-from typing import Self, overload
+from typing import Optional, Self, overload
 
 from System import EventArgs, EventHandler
 from System.ComponentModel import ISupportInitialize
 from System.Windows.Controls import ContentControl
 from System.Windows.Markup import IQueryAmbient
-from System.Windows.Media import Visual
+from System.Windows.Media import ImageSource, Visual
 from System.Windows.Media.Animation import IAnimatable
 from System.Windows.Threading import DispatcherObject
 
@@ -55,6 +55,10 @@ class Application(DispatcherObject, IQueryAmbient):
 	def ShutdownMode(self) -> ShutdownMode: ...
 	@ShutdownMode.setter
 	def ShutdownMode(self, value: ShutdownMode) -> None: ...
+	@property
+	def MainWindow(self) -> Optional[Window]:...
+	@MainWindow.setter
+	def MainWindow(self, value: Optional[Window]) -> None:...
 
 class DependencyObject(DispatcherObject):
 	#incomplete
@@ -62,7 +66,12 @@ class DependencyObject(DispatcherObject):
 
 class Freezable(DependencyObject, ABC):
 	#incomplete
-	pass
+	@property
+	def CanFreeze(self) -> bool: ...
+	@property
+	def IsFrozen(self) -> bool: ...
+	def Clone(self) -> Self: ...
+	def Freeze(self) -> None: ...
 
 class IInputElement(ABC):
 	#incomplete
@@ -70,7 +79,8 @@ class IInputElement(ABC):
 
 class UIElement(Visual, IInputElement, IAnimatable):
 	#incomplete
-	pass
+	@property
+	def IsVisible(self) -> bool: ...
 
 class IFrameworkInputElement(ABC):
 	#incomplete
@@ -119,6 +129,38 @@ class FrameworkContentElement(ContentElement, ISupportInitialize, IFrameworkInpu
 	#incomplete
 	pass
 
+class WindowState(Enum):
+	# The window is restored.
+	Normal = 0
+	# The window is minimized.
+	Minimized = 1
+	# The window is maximized.
+	Maximized = 2
+
+class WindowStyle(Enum):
+	"""
+	⚠ Special static key:<br>
+	None -> getattr(WindowStyle, "None")
+	"""
+	# Only the client area is visible - the title bar and border are not shown. A NavigationWindow with a WindowStyle of None will still display the navigation user interface (UI).
+	# None = 0
+	# A window with a single border. This is the default value.
+	SingleBorderWindow = 1
+	# A window with a 3-D border.
+	ThreeDBorderWindow = 2
+	# A fixed tool window.
+	ToolWindow = 3
+
+class ResizeMode(Enum):
+	# A window cannot be resized. The Minimize and Maximize buttons are not displayed in the title bar.
+	NoResize = 0
+	# A window can only be minimized and restored. The Minimize and Maximize buttons are both shown, but only the Minimize button is enabled.
+	CanMinimize = 1
+	# A window can be resized. The Minimize and Maximize buttons are both shown and enabled.
+	CanResize = 2
+	# A window can be resized. The Minimize and Maximize buttons are both shown and enabled. A resize grip appears in the bottom-right corner of the window.
+	CanResizeWithGrip = 3
+
 class Window(ContentControl):
 	#incomplete
 	def __init__(self):
@@ -127,5 +169,30 @@ class Window(ContentControl):
 	def Title(self) -> str: ...
 	@Title.setter
 	def Title(self, value: str) -> None: ...
+	@property
+	def Icon(self) -> Optional[ImageSource]: ...
+	@Icon.setter
+	def Icon(self, value: Optional[ImageSource]) -> None: ...
+	@property
+	def WindowState(self) -> WindowState: ...
+	@WindowState.setter
+	def WindowState(self, value: WindowState) -> None: ...
+	@property
+	def WindowStyle(self) -> WindowStyle: ...
+	@WindowStyle.setter
+	def WindowStyle(self, value: WindowStyle) -> None: ...
 	def Show(self) -> None: ...
+	def Hide(self) -> None: ...
 	def Close(self) -> None: ...
+	@property
+	def Top(self) -> float: ...
+	@Top.setter
+	def Top(self, value: float) -> None: ...
+	@property
+	def Left(self) -> float: ...
+	@Left.setter
+	def Left(self, value: float) -> None: ...
+	@property
+	def ResizeMode(self) -> ResizeMode: ...
+	@ResizeMode.setter
+	def ResizeMode(self, value: ResizeMode) -> None: ...
