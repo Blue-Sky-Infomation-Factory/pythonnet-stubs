@@ -11,15 +11,15 @@ def pair(name: str, type: str = "Any"):
 
 def gen_get(name: str, type: str = "Any"):
 	text = getter(name, type)
-	print(text)
 	copy(text)
+	return text
 
 def gen_pair(name: str, type: str = "Any"):
 	text = pair(name, type)
-	print(text)
 	copy(text)
+	return text
 
 def batch_gen(list: List[List[str]]):
 	text = "".join([pair(item[0], item[1]) for item in list])
-	print(text)
 	copy(text)
+	return text
