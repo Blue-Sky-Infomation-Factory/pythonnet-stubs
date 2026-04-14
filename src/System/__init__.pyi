@@ -3,10 +3,10 @@ https://learn.microsoft.com/en-us/dotnet/api/system
 """
 
 from abc import ABC, abstractmethod
-from typing import Callable, Final, List, Optional, Self, Union, overload
+from typing import Callable, Final, Iterator, List, Optional, Self, Union, overload
 
 from System.Runtime.Serialization import ISerializable, SafeSerializationEventArgs, SerializationInfo, StreamingContext
-from System.Collections import ICollection, IDictionary, IStructuralComparable, IStructuralEquatable
+from System.Collections import ICollection, IDictionary, IEnumerable, IEnumerator, IList, IStructuralComparable, IStructuralEquatable
 from System.Reflection import MethodBase
 
 class Object:
@@ -93,9 +93,12 @@ class ICloneable(ABC):
 	@abstractmethod
 	def Clone(self) -> Self: ...
 
-class Array[T](Object, ICollection, IStructuralComparable, IStructuralEquatable, ICloneable):
+class Array[T](Object, ICollection, IEnumerable, IList, IStructuralComparable, IStructuralEquatable, ICloneable):
 	# incomplete
-	pass
+	def __getitem__(self, index: int) -> T: ...
+	def __setitem__(self, index: int, value: T) -> None: ...
+	def __len__(self) -> int: ...
+	def __iter__(self) -> Iterator[T]: ...
 
 type _inbound_array[T] = Union[Array[T], List[T]]
 
@@ -116,5 +119,5 @@ class IFormattable(ABC):
 	pass
 
 class IEquatable[T](ABC):
-	# incomplete
-	pass
+	@abstractmethod
+	def Equals(self, other: T, /) -> bool: ...

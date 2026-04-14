@@ -3,9 +3,9 @@ https://learn.microsoft.com/en-us/dotnet/api/system.collections
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, List
+from typing import Any, Iterator
 
-from System import ValueType
+from System import Array, ValueType
 
 
 class IList(ABC):
@@ -36,24 +36,26 @@ class IList(ABC):
 	@abstractmethod
 	def __setitem__(self, index: int, value: Any) -> None: ...
 
-class IEnumerator[T](ABC):
+class IEnumerator(ABC):
 	@property
 	@abstractmethod
-	def Current(self) -> T: ...
+	def Current(self) -> Any: ...
 
 	@abstractmethod
 	def MoveNext(self) -> bool: ...
 	@abstractmethod
 	def Reset(self) -> None: ...
-
-class IEnumerable[T](ABC):
 	@abstractmethod
-	def GetEnumerator(self) -> IEnumerator[T]: ...
+	def __next__(self) -> Any: ...
 
-class ICollection[T](IEnumerable[T], ABC):
+class IEnumerable(ABC):
+	@abstractmethod
+	def GetEnumerator(self) -> IEnumerator: ...
+
+class ICollection(IEnumerable, ABC):
 	#incomplete
 	@abstractmethod
-	def CopyTo(self, array: List[T], index: int) -> None: ...
+	def CopyTo(self, array: Array, index: int) -> None: ...
 
 	@property
 	@abstractmethod
@@ -65,15 +67,6 @@ class ICollection[T](IEnumerable[T], ABC):
 	@abstractmethod
 	def SyncRoot(self) -> object: ...
 
-	@abstractmethod
-	def Add(self, item: T) -> None: ...
-	@abstractmethod
-	def clear(self) -> None: ...
-	@abstractmethod
-	def Contains(self, item: T, /) -> bool: ...
-	@abstractmethod
-	def Remove(self, item: T, /) -> bool: ...
-
 class KeyValuePair[KT, VT](ValueType):
 	# incomplete
 	@property
@@ -81,7 +74,7 @@ class KeyValuePair[KT, VT](ValueType):
 	@property
 	def Value(self) -> VT: ...
 
-class IDictionary[KT, VT](ICollection[KeyValuePair[KT, VT]], ABC):
+class IDictionary(ICollection, ABC):
 	@property
 	@abstractmethod
 	def IsFixedSize(self) -> bool: ...
@@ -90,26 +83,26 @@ class IDictionary[KT, VT](ICollection[KeyValuePair[KT, VT]], ABC):
 	def IsReadOnly(self) -> bool: ...
 	@property
 	@abstractmethod
-	def Keys(self) -> ICollection[KT]: ...
+	def Keys(self) -> ICollection: ...
 	@property
 	@abstractmethod
-	def Values(self) -> ICollection[VT]: ...
+	def Values(self) -> ICollection: ...
 
 	@abstractmethod
-	def Add(self, key: KT, value: VT) -> None: ... # type: ignore
+	def Add(self, key: Any, value: Any) -> None: ... # type: ignore
 	@abstractmethod
 	def Clear(self) -> None: ...
 	@abstractmethod
-	def Contains(self, key: KT) -> bool: ... # type: ignore
+	def Contains(self, key: Any) -> bool: ... # type: ignore
 	@abstractmethod
 	def GetEnumerator(self) -> IDictionaryEnumerator: ...
 	@abstractmethod
-	def Remove(self, key: KT) -> bool: ... # type: ignore
+	def Remove(self, key: Any) -> bool: ... # type: ignore
 
 	@abstractmethod
-	def __getitem__(self, key: KT) -> VT: ...
+	def __getitem__(self, key: Any) -> Any: ...
 	@abstractmethod
-	def __setitem__(self, key: KT, value: VT) -> None: ...
+	def __setitem__(self, key: Any, value: Any) -> None: ...
 
 class DictionaryEntry(ValueType):
 	# incomplete
