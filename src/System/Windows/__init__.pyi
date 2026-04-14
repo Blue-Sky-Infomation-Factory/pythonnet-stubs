@@ -6,7 +6,7 @@ from abc import ABC
 from enum import Enum
 from typing import Optional, Self, overload
 
-from System import EventArgs, EventHandler
+from System import EventArgs, EventHandler, IEquatable, ValueType
 from System.ComponentModel import ISupportInitialize
 from System.Windows.Controls import ContentControl
 from System.Windows.Markup import IQueryAmbient
@@ -86,6 +86,29 @@ class IFrameworkInputElement(ABC):
 	#incomplete
 	pass
 
+class Thickness(ValueType, IEquatable[Thickness]):
+	@overload
+	def __init__(self, uniformLength: float): ...
+	@overload
+	def __init__(self, left: float, top: float, right: float, bottom: float): ...
+	@property
+	def Left(self) -> float: ...
+	@Left.setter
+	def Left(self, value: float) -> None: ...
+	@property
+	def Top(self) -> float: ...
+	@Top.setter
+	def Top(self, value: float) -> None: ...
+	@property
+	def Right(self) -> float: ...
+	@Right.setter
+	def Right(self, value: float) -> None: ...
+	@property
+	def Bottom(self) -> float: ...
+	@Bottom.setter
+	def Bottom(self, value: float) -> None: ...
+	def Equals(self, other: Thickness) -> bool: ... # pyright: ignore[reportIncompatibleMethodOverride]
+
 class FrameworkElement(UIElement, ISupportInitialize, IFrameworkInputElement, IQueryAmbient):
 	#incomplete
 	@property
@@ -112,6 +135,10 @@ class FrameworkElement(UIElement, ISupportInitialize, IFrameworkInputElement, IQ
 	def MaxHeight(self) -> float: ...
 	@MaxHeight.setter
 	def MaxHeight(self, value: float) -> None: ...
+	@property
+	def Margin(self) -> Thickness:...
+	@Margin.setter
+	def Margin(self, value: Thickness) -> None:...
 	@property
 	def HorizontalAlignment(self) -> HorizontalAlignment:...
 	@HorizontalAlignment.setter
