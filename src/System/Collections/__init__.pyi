@@ -3,7 +3,7 @@ https://learn.microsoft.com/en-us/dotnet/api/system.collections
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Iterator
+from typing import Any
 
 from System import Array, ValueType
 
@@ -45,8 +45,6 @@ class IEnumerator(ABC):
 	def MoveNext(self) -> bool: ...
 	@abstractmethod
 	def Reset(self) -> None: ...
-	@abstractmethod
-	def __next__(self) -> Any: ...
 
 class IEnumerable(ABC):
 	@abstractmethod

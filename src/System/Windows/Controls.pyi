@@ -6,6 +6,7 @@ from typing import Optional
 
 from System import Object
 from System.Collections import ICollection, IEnumerable, IList
+from System.Collections.Generic import ICollection as g_ICollection
 from System.Windows import FrameworkContentElement, FrameworkElement, UIElement
 from System.Windows.Markup import IAddChild
 from System.Windows.Media import Brush
@@ -22,7 +23,7 @@ class ContentControl(Control, IAddChild):
 	@Content.setter
 	def Content(self, value: Optional[Object]) -> None: ...
 
-class UIElementCollection(Object, ICollection[UIElement]):
+class UIElementCollection(Object, ICollection, IEnumerable, IList):
 	# incomplete
 	pass
 
@@ -61,7 +62,7 @@ class ColumnDefinition(DefinitionBase):
 
 class ColumnDefinitionCollection(
 	Object,
-	ICollection[ColumnDefinition]
+	g_ICollection[ColumnDefinition]
 ):
     # incomplete
 	pass
@@ -72,7 +73,7 @@ class RowDefinition(DefinitionBase):
 
 class RowDefinitionCollection(
 	Object,
-	ICollection[RowDefinition]
+	g_ICollection[RowDefinition]
 ):
     # incomplete
 	pass
