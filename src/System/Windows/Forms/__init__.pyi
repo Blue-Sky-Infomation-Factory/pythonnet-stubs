@@ -177,3 +177,45 @@ class Application(Object):
 class WindowsFormsSynchronizationContext(SynchronizationContext):
 	#incomplete
 	pass
+
+class DialogResult(Enum):
+	"""
+	⚠ Special key:<br>
+	None = 0<br>
+	getattr(DialogResult, "None")
+	"""
+	# Nothing is returned from the dialog box. This means that the modal dialog continues running.
+	# None = 0
+	# The dialog box return value is OK (usually sent from a button labeled OK).
+	OK = 1
+	# The dialog box return value is Cancel (usually sent from a button labeled Cancel).
+	Cancel = 2
+	# The dialog box return value is Abort (usually sent from a button labeled Abort).
+	Abort = 3
+	# The dialog box return value is Retry (usually sent from a button labeled Retry).
+	Retry = 4
+	# The dialog box return value is Ignore (usually sent from a button labeled Ignore).
+	Ignore = 5
+	# The dialog box return value is Yes (usually sent from a button labeled Yes).
+	Yes = 6
+	# The dialog box return value is No (usually sent from a button labeled No).
+	No = 7
+	# The dialog box return value is Try Again (usually sent from a button labeled Try Again).
+	TryAgain = 10
+	# The dialog box return value is Continue (usually sent from a button labeled Continue).
+	Continue = 11
+
+class CommonDialog(Component, ABC):
+	# incomplete
+	def ShowDialog(self) -> DialogResult: ...
+
+class FolderBrowserDialog(CommonDialog):
+	# incomplete
+	@property
+	def Multiselect(self) -> bool: ...
+	@Multiselect.setter
+	def Multiselect(self, value: bool) -> None: ...
+	@property
+	def InitialDirectory(self) -> str: ...
+	@InitialDirectory.setter
+	def InitialDirectory(self, value: str) -> None: ...
