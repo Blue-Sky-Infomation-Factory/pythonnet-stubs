@@ -8,8 +8,8 @@ from typing import Final, List, Optional, Self, Union, overload
 from System import Object, EventArgs, EventHandler, ICloneable, IntPtr
 from System.ComponentModel import CancelEventArgs, Component
 from System.Drawing import Size, Color
-from System.Collections import ICollection, IEnumerable, IList
 from System.Threading import SynchronizationContext
+from System.Windows.Forms.Layout import ArrangedElementCollection
 
 class DockStyle(Enum):
 	"""
@@ -57,8 +57,6 @@ class FormClosedEventArgs(EventArgs):
 		self.CloseReason: Final[CloseReason]
 
 class FormClosedEventHandler(EventHandler[Form, FormClosedEventArgs]): ...
-
-class ArrangedElementCollection(Object, ICollection, IEnumerable, IList): ...
 
 class ControlStyles(Enum):
 	ContainerControl = 0b000000000000000001
